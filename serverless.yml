@@ -24,10 +24,12 @@ provider:
     EMPLEADOS_TABLE: ${self:custom.tableName}
 
 functions:
-  api:
-    handler: index.handler
+  addEmpleado:
+    handler: src/add_empleado.addEmpleado
     events:
-      - httpApi: '*'
+      - httpApi:
+          path: /empleados
+          method: POST
 
 resources:
   Resources:
