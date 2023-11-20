@@ -42,6 +42,12 @@ functions:
       - httpApi:
           path: /empleados/{id}
           method: GET
+  deleteEmpleado:
+    handler: src/delete_empleado.deleteEmpleado
+    events:
+      - httpApi:
+          path: /empleados/{id}
+          method: DElETE
 
 resources:
   Resources:
