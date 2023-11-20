@@ -5,15 +5,41 @@ Con la utilizando del framework Serverless para simplificar el despliegue y la g
 
 ## Endpoints
 
-A continuación, se detallan los endpoints disponibles en nuestra API:
+A continuación, se detallan los endpoints disponibles en la API:
 
-GET /empleados: Recupera la lista completa de empleados.
-GET /empleados/{id}: Recupera la información de un empleado específico por su ID.
-POST /empleados: Crea un nuevo empleado.
-PUT /empleados/{id}: Actualiza la información de un empleado existente.
-DELETE /empleados/{id}: Elimina a un empleado según su ID.
+- GET /empleados: Recupera la lista completa de empleados.\n
+- GET /empleados/{id}: Recupera la información de un empleado específico por su ID.\n
+- POST /empleados: Crea un nuevo empleado.\n
+- PUT /empleados/{id}: Actualiza la información de un empleado existente.\n
+- DELETE /empleados/{id}: Elimina a un empleado según su ID.\n
 
-### Ejemplo de uso
+## Deployment
+
+En caso de no tener Serverless instalado
+
+Instalar Serverless
+```
+npm install -g serverless
+```
+
+Configurar dependencias de AWS
+```
+serverless config credentials --provider aws --key TU-CLAVE --secret TU-SECRET
+```
+
+Instalar dependencias:
+
+```
+npm install
+```
+
+y luego hacer el deploy:
+
+```
+serverless deploy
+```
+
+## Ejemplo de uso Post deploy
 
 ```bash
 # Obtener la lista de empleados
@@ -42,45 +68,17 @@ curl -X PATCH -H "Content-Type: application/json" -d '{"nombre": "Nuevo Nombre",
 curl -X DELETE https://url-base/empleados/{id}
 ```
 
-### Deployment
-
-### En caso de no tener Serverless instalado
-
-Instalar Serverless
-```
-npm install -g serverless
-```
-
-Configurar dependencias de AWS
-```
-serverless config credentials --provider aws --key TU-CLAVE --secret TU-SECRET
-```
-
-Instalar dependencias:
-
-```
-npm install
-```
-
-y luego hacer el deploy:
-
-```
-serverless deploy
-```
-
-
-```
 
 ### Local development
 
-It is also possible to emulate DynamoDB, API Gateway and Lambda locally using the `serverless-dynamodb-local` and `serverless-offline` plugins. In order to do that, run:
+También es posible emular DynamoDB, API Gateway y Lambda localmente utilizando los complementos serverless-dynamodb-local y serverless-offline. Para hacerlo, ejecuta:
 
 ```bash
 serverless plugin install -n serverless-dynamodb-local
 serverless plugin install -n serverless-offline
 ```
 
-It will add both plugins to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`. Make sure that `serverless-offline` is listed as last plugin in `plugins` section:
+Esto añadirá ambos complementos a devDependencies en el archivo package.json y los incluirá en la sección plugins en serverless.yml. Asegúrate de que serverless-offline esté listado como el último complemento en la sección plugins:
 
 ```
 plugins:
@@ -88,7 +86,7 @@ plugins:
   - serverless-offline
 ```
 
-You should also add the following config to `custom` section in `serverless.yml`:
+También debes agregar la siguiente configuración a la sección custom en serverless.yml:
 
 ```
 custom:
@@ -100,13 +98,13 @@ custom:
       - dev
 ```
 
-Additionally, we need to reconfigure `AWS.DynamoDB.DocumentClient` to connect to our local instance of DynamoDB. We can take advantage of `IS_OFFLINE` environment variable set by `serverless-offline` plugin and replace:
+Adicionalmente, necesitamos reconfigurar AWS.DynamoDB.DocumentClient para que se conecte a nuestra instancia local de DynamoDB. Podemos aprovechar la variable de entorno IS_OFFLINE establecida por el complemento serverless-offline y reemplazar:
 
 ```javascript
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient();
 ```
 
-with the following:
+con lo siguiente:
 
 ```javascript
 const dynamoDbClientParams = {};
@@ -117,12 +115,12 @@ if (process.env.IS_OFFLINE) {
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient(dynamoDbClientParams);
 ```
 
-After that, running the following command with start both local API Gateway emulator as well as local instance of emulated DynamoDB:
+Después de eso, ejecutar el siguiente comando iniciará tanto el emulador local de API Gateway como la instancia local de DynamoDB emulada:
 
 ```bash
 serverless offline start
 ```
 
-To learn more about the capabilities of `serverless-offline` and `serverless-dynamodb-local`, please refer to their corresponding GitHub repositories:
+Para obtener más información sobre las capacidades de serverless-offline y serverless-dynamodb-local, consulta sus respectivos repositorios en GitHub:
 - https://github.com/dherault/serverless-offline
 - https://github.com/99x/serverless-dynamodb-local
