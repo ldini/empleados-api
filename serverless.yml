@@ -36,6 +36,12 @@ functions:
       - httpApi:
           path: /empleados
           method: GET
+  getEmpleadoId:
+    handler: src/get_empleado_id.getEmpleadoId
+    events:
+      - httpApi:
+          path: /empleados/{id}
+          method: GET
 
 resources:
   Resources:
