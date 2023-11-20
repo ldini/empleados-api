@@ -48,6 +48,12 @@ functions:
       - httpApi:
           path: /empleados/{id}
           method: DElETE
+  updateEmpleado:
+    handler: src/update_empleado.updateEmpleado
+    events:
+      - httpApi:
+          path: /empleados/{id}
+          method: PATCH
 
 resources:
   Resources:

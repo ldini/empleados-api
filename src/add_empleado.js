@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const { v4 } = require('uuid');
 const EMPLEADOS_TABLE = process.env.EMPLEADOS_TABLE;
 
-module.exports.adddEmpleados = async (event) => {
+module.exports.addEmpleado = async (event) => {
   try {
       const db = new AWS.DynamoDB.DocumentClient();
 
