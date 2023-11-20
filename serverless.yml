@@ -30,6 +30,12 @@ functions:
       - httpApi:
           path: /empleados
           method: POST
+  getEmpleados:
+    handler: src/get_empleados.getEmpleados
+    events:
+      - httpApi:
+          path: /empleados
+          method: GET
 
 resources:
   Resources:
